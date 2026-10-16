@@ -76,8 +76,10 @@ async function writeLocalCollection(collectionName: string, data: any[]): Promis
 let lastConnectionError: string | null = null;
 let clientPromise: Promise<MongoClient> | null = null;
 
-async function getDbConnection() {
-  if (db) return db;
+async function getDbConnection(): Promise<Db | null> {
+  if (db && client) {
+    return db;
+  }
   if (!MONGODB_URI) {
     lastConnectionError = 'MONGODB_URI is not configured in the environment variables';
     return null;
@@ -90,19 +92,24 @@ async function getDbConnection() {
         serverSelectionTimeoutMS: 5000
       });
       clientPromise = client.connect().then(c => {
-        console.log('Successfully connected to MongoDB!');
+        console.log('Successfully connected to MongoDB cluster!');
         lastConnectionError = null;
         return c;
       }).catch(err => {
         clientPromise = null;
         client = null;
+        db = null;
         throw err;
       });
     }
     const connectedClient = await clientPromise;
     db = connectedClient.db(DB_NAME);
+    lastConnectionError = null;
     return db;
   } catch (err: any) {
+    clientPromise = null;
+    client = null;
+    db = null;
     lastConnectionError = err.message || String(err);
     console.warn('Could not connect to MongoDB, falling back to local JSON files:', lastConnectionError);
     return null;
@@ -111,7 +118,21 @@ async function getDbConnection() {
 
 export const dbHelper = {
   getDiagnostics: async () => {
-    const isConnected = !!(await getDbConnection());
+    let isConnected = false;
+    let pingError: string | null = null;
+    try {
+      const database = await getDbConnection();
+      if (database) {
+        await database.command({ ping: 1 });
+        isConnected = true;
+        lastConnectionError = null;
+      }
+    } catch (err: any) {
+      isConnected = false;
+      pingError = err.message || String(err);
+      lastConnectionError = pingError;
+    }
+
     let maskedUri = MONGODB_URI;
     try {
       if (MONGODB_URI) {
