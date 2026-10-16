@@ -1,0 +1,59 @@
+{
+  "short_name": "RackFlow WMS",
+  "name": "RackFlow WMS - Warehouse Management System",
+  "description": "Sistem Manajemen Gudang Pintar RackFlow WMS - Monitor Stok, Inbound, Outbound, dan Rak.",
+  "id": "rackflow-wms-v1",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F294D",
+  "theme_color": "#0F294D",
+  "orientation": "any",
+  "dir": "ltr",
+  "lang": "id-ID",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/wms.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/wms.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/wms.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/wms.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/wms.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tampilan Desktop WMS"
+    },
+    {
+      "src": "/wmsa5.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tampilan Mobile WMS"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"]
+}
+

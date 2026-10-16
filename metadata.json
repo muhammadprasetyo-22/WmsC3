@@ -1,0 +1,6 @@
+{
+  "name": "RackFlow WMS",
+  "description": "RackFlow WMS - Standalone Warehouse Management System featuring Directed Putaway, FIFO Picking, and Rack Management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
